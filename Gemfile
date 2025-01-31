@@ -81,3 +81,7 @@ gem 'draper'
 gem 'pundit'
 gem 'sassc-rails'
 
+
+#bootstrap
+gem 'bootstrap', '~> 5.3.3'
+
