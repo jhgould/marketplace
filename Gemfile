@@ -71,4 +71,13 @@ group :test do
   gem 'simplecov'
 end
 
+#devise 
 gem "devise", "~> 4.9"
+
+#active admin 
+gem 'activeadmin'
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
+gem 'sassc-rails'
+
