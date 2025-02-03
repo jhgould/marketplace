@@ -19,4 +19,7 @@ RSpec.describe 'Admin::Apartments', type: :feature do
         click_button 'Create Apartment'
         expect(page).to have_content 'Apartment was successfully created.'
     end 
+
+
+    #add a bad address
 end 
