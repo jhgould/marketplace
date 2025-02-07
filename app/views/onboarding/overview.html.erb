@@ -1,0 +1,20 @@
+<h2>Overview</h2>
+<p><strong>Email:</strong>
+    <%= @user.email %>
+</p>
+<p><strong>Name:</strong>
+    <%= @user.first_name %>
+        <%= @user.last_name %>
+</p>
+<p>
+    <strong>Address:</strong>
+    <%= [@user.street_address, @user.unit_number, @user.city, @user.state, @user.zipcode, @user.country].compact.join(', ') %>
+</p>
+<p><strong>Phone:</strong> <%= @user.phone_number %></p>
+
+<%= form_for @user, url: next_wizard_path, method: :get do |f| %>
+  <div>
+    <%= link_to "Back" , wizard_path(wizard_steps[wizard_steps.index(step) - 1]) if wizard_steps.index(step).positive? %>
+    <%= f.submit "Confirm" %>
+  </div>
+<% end %>

@@ -13,7 +13,6 @@ class NormalizationService
   def format_address(address)
     [
       address[:street_address],
-      address[:unit_number],
       address[:city],
       address[:state],
       address[:country],
@@ -33,15 +32,6 @@ class NormalizationService
       "zip_code" => address_data["postcode"],
       "full_address" => result.data["display_name"]
      }
-     #api is different than it used to be
-    # {
-    #   "street_address" => "#{find_component(result, 'street_number')} #{find_component(result, 'route')}",
-    #   "unit_number" => find_component(result, 'subpremise'),
-    #   "city" => find_component(result, 'locality'),
-    #   "state" => find_component(result, 'administrative_area_level_1'),
-    #   "country" => find_component(result, 'country'),
-    #   "zip_code" => find_component(result, 'postal_code')
-    # }
   end
 
   # Finds a component by type in the geocoded result

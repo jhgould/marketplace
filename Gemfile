@@ -88,4 +88,5 @@ gem 'bootstrap', '~> 5.3.3'
 #google geocoder
 gem 'geocoder'
 
-
+#multi_step forms
+gem 'wicked'

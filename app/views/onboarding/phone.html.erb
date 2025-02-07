@@ -1,0 +1,11 @@
+<h2>Phone Number</h2>
+<%= form_for @user, url: wizard_path, method: :put do |f| %>
+    <div>
+        <%= f.label :phone_number %>
+            <%= f.telephone_field :phone_number %>
+    </div>
+    <div>
+        <%= link_to "Back" , wizard_path(wizard_steps[wizard_steps.index(step) - 1]) if wizard_steps.index(step).positive? %>
+        <%= f.submit "Next" %>
+    </div>
+<% end %>

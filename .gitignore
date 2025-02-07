@@ -34,3 +34,11 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 coverage
+
+/config/credentials/development.key
+
+/config/credentials/environment.key
+
+/config/credentials/production.key
+
+/config/credentials/test.key

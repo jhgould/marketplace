@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_31_223454) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_07_202427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,8 +59,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_31_223454) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "onboarding_complete"
+    t.string "phone_number"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "street_address"
+    t.string "unit_number"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "country"
+    t.string "full_address"
+    t.bigint "apartment_id"
+    t.index ["apartment_id"], name: "index_users_on_apartment_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "users", "apartments"
 end
