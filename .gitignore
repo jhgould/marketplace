@@ -31,14 +31,8 @@
 
 /public/assets
 
-# Ignore master key for decrypting credentials and more.
-/config/master.key
+#ignoring simple cov coverage
 coverage
 
-/config/credentials/development.key
-
-/config/credentials/environment.key
-
-/config/credentials/production.key
-
-/config/credentials/test.key
+#rails master key
+/config/master.key
