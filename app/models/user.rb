@@ -4,9 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  encrypts :phone_number, :street_address, :unit_number, :city, :state, :zipcode, :country, deterministic: true
-  
-  
+  encrypts :phone_number, :street_address, :unit_number, :city, :state, :zipcode, :country, :full_address, deterministic: true
+
+  belongs_to :apartment, optional: true
+
   cattr_accessor :form_steps do 
     %w[personal_info phone overview apartment]
   end
