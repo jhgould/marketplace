@@ -17,9 +17,9 @@ RSpec.describe 'Admin::Apartments', type: :feature do
         fill_in 'Zip code', with: '80205'
         fill_in 'Country', with: 'USA'
         click_button 'Create Apartment'
-        expect(page).to have_content 'Apartment was successfully created.'
+
+        expect(page).to have_content '3463 Walnut Street'
     end 
 
 
-    #add a bad address
 end 
