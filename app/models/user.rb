@@ -44,4 +44,10 @@ class User < ApplicationRecord
 
     # Additional validations for other steps can be added here as needed.
 
+
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["apartment_id", "city", "country", "created_at", "email", "encrypted_password", "first_name", "full_address", "id", "id_value", "last_name", "onboarding_complete", "phone_number", "remember_created_at", "reset_password_sent_at", "reset_password_token", "state", "street_address", "unit_number", "updated_at", "zip_code"]
+  end
+
 end
