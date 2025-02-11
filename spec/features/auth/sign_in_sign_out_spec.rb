@@ -13,7 +13,7 @@ RSpec.feature "Sign in and sign out", type: :feature do
             click_button "Log in"
 
             expect(page).to have_content("Signed in successfully")
-            save_and_open_page
+
             click_button "Logout"
 
             expect(page).to have_content("Signed out successfully")
