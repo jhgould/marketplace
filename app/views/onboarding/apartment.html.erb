@@ -1,0 +1,10 @@
+<h2>Apartment Matching</h2>
+<p>We’ll match your apartment based on your address shortly.</p>
+    <%=@apartment.street_address%>
+    <%= button_to "Join" , join_apartment_onboarding_path(apartment_id: @apartment.id), method: :patch,class: "btn btn-primary" %>
+<%= form_for @user, url: wizard_path, method: :put do |f| %>
+    <div>
+        <%= link_to "Back" , wizard_path(wizard_steps[wizard_steps.index(step) - 1]) if wizard_steps.index(step).positive? %>
+        <%= f.submit "Finish" %>
+    </div>
+<% end %>
