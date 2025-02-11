@@ -6,18 +6,16 @@ class User < ApplicationRecord
 
   encrypts :phone_number, :street_address, :unit_number, :city, :state, :zipcode, :country, deterministic: true
   
-  attr_accessor :form_step
-
-  FORM_STEPS = %w[personal_info phone overview apartment]
-
-  def form_steps
-    FORM_STEPS
+  
+  cattr_accessor :form_steps do 
+    %w[personal_info phone overview apartment]
   end
+  attr_accessor :form_step
 
   # Returns true if the current step is equal to or comes after the given step.
   def required_for_step?(step)
     return true if form_step.nil?  # Validate all if no step is set
-    form_steps.index(step.to_s) <= form_steps.index(form_step)
+    form_steps.index(step.to_s) <= form_steps.index(form_step.to_s)
   end
 
   # --- Conditional Validations ---
