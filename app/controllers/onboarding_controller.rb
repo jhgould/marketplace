@@ -10,7 +10,11 @@ class OnboardingController < ApplicationController
   def show
     case step 
     when "apartment" 
-      @apartment = apartment_search   
+      @apartment = apartment_search  
+      if @apartment.nil? 
+        flash[:alert] = "Apartment not found. We have submitted your address for verification."
+        redirect_to root_path and return 
+      end
     end 
     render_wizard
   end
@@ -19,6 +23,7 @@ class OnboardingController < ApplicationController
     @user.form_step = step.to_s 
     case step 
     when "personal_info"
+      submitted_address(user_params(step))
       address_params = normalize_address(user_params(step))
       update_user(address_params)
     else 
@@ -36,6 +41,17 @@ class OnboardingController < ApplicationController
   end 
 
   private
+
+  def submitted_address(user_params)
+      submitted_address = {   
+        street_address: user_params["street_address"],
+        city:           user_params["city"],
+        state:          user_params["state"],
+        zip_code:       user_params["zip_code"],
+        country:        user_params["country"]
+      }
+      session[:submitted_address] = submitted_address
+    end 
 
   def normalize_address(user_params)
     normalized_address = NormalizationService.new.normalize(user_params)
@@ -60,10 +76,12 @@ class OnboardingController < ApplicationController
       country:        @user.country
     }
     apartment = ApartmentSearchService.new.search(address)
-    unless apartment
-      # AdminApartmentSearchRequest.new.potential_apartment(address)
+    if apartment
+      return apartment
+    else 
+      AdminPendingApartmentVerification.submit_for_review(address, session[:submitted_address])  
+      return nil
     end
-    apartment
   end 
 
   def set_user

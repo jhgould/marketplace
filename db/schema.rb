@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_07_202427) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_11_184327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_07_202427) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admin_pending_apartment_verifications", force: :cascade do |t|
+    t.string "street_address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "country"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "submitted_street_address"
+    t.string "submitted_city"
+    t.string "submitted_state"
+    t.string "submitted_zip_code"
+    t.string "submitted_country"
   end
 
   create_table "admin_users", force: :cascade do |t|

@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.feature "Sign in and sign out", type: :feature do
     scenario "User signs in and signs out" do
         user = User.create!(email: "test@example.com", password: "password")
+        user.update(onboarding_complete: true)
 
             visit new_user_session_path
 
