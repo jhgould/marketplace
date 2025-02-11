@@ -36,7 +36,7 @@ RSpec.feature "User sign up flow", type: :feature do
             # expect(page).to have_content("Confirm your apartment address and join!")
             click_button "Join"
 
-            # expect(current_path).to eq(user_dashboard_path)
+            expect(current_path).to eq(user_dashboard_path)
         end
 
         scenario "New user signs up with an invalid address" do
@@ -123,7 +123,8 @@ RSpec.feature "User sign up flow", type: :feature do
 
             expect(page).to have_content("424 Lincoln Avenue")
             click_button "Join"
-
-        end
+            
+            expect(current_path).to eq(user_dashboard_path)
+        end 
 
 end
