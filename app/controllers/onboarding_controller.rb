@@ -8,56 +8,50 @@ class OnboardingController < ApplicationController
   steps(*User.form_steps)
 
   def show
-    case step 
-    when "apartment" 
-      @apartment = apartment_search  
-      if @apartment.nil? 
+    if step == "apartment"
+      @apartment = apartment_search
+      if @apartment.nil?
         flash[:alert] = "Apartment not found. We have submitted your address for verification."
-        redirect_to root_path and return 
+        redirect_to root_path and return
       end
-    end 
+    end
     render_wizard
   end
 
   def update
-    @user.form_step = step.to_s 
-    case step 
-    when "personal_info"
-      submitted_address(user_params(step))
-      address_params = normalize_address(user_params(step))
+    @user.form_step = step.to_s
+    user_params_step = user_params(step)
+
+    if step == "personal_info"
+      submitted_address(user_params_step)
+      address_params = normalize_address(user_params_step)
       update_user(address_params)
-    else 
-      update_user(user_params(step))
-    end 
+    else
+      update_user(user_params_step)
+    end
   end
 
   def join_apartment
-    if @user.update(apartment_id: params["apartment_id"])
-      @user.update(onboarding_complete: true)
+    if @user.update(apartment_id: params[:apartment_id], onboarding_complete: true)
       redirect_to finish_wizard_path and return
-    else 
+    else
       render_wizard
-    end 
-  end 
+    end
+  end
 
   private
 
   def submitted_address(user_params)
-      submitted_address = {   
-        street_address: user_params["street_address"],
-        city:           user_params["city"],
-        state:          user_params["state"],
-        zip_code:       user_params["zip_code"],
-        country:        user_params["country"]
-      }
-      session[:submitted_address] = submitted_address
-    end 
+    session[:submitted_address] = user_params.slice(
+      "street_address", "city", "state", "zip_code", "country"
+    )
+  end
 
   def normalize_address(user_params)
     normalized_address = NormalizationService.new.normalize(user_params)
     normalized_address["unit_number"] = user_params["unit_number"]
-    address_params = user_params.merge(normalized_address)
-  end 
+    user_params.merge(normalized_address)
+  end
 
   def update_user(user_params) 
     if @user.update(user_params)
@@ -76,31 +70,26 @@ class OnboardingController < ApplicationController
       country:        @user.country
     }
     apartment = ApartmentSearchService.new.search(address)
-    if apartment
-      return apartment
-    else 
-      AdminPendingApartmentVerification.submit_for_review(address, session[:submitted_address])  
-      return nil
+    unless apartment
+      AdminPendingApartmentVerification.submit_for_review(address, session[:submitted_address])
     end
-  end 
+    apartment
+  end
 
   def set_user
     @user = current_user
   end
 
   def user_params(step)
-    permitted = case step
-                when "sign_up"
-                  [:email, :password, :password_confirmation]
-                when "personal_info"
-                  [:first_name, :last_name, :street_address, :unit_number, :city, :state, :zip_code, :country]
-                when "phone"
-                  [:phone_number]
-                when "overview" 
-                  []
-                when "apartment"
-                  [:apartment_id] 
-                end
+    permitted_attributes = {
+      "sign_up" => [:email, :password, :password_confirmation],
+      "personal_info" => [:first_name, :last_name, :street_address, :unit_number, :city, :state, :zip_code, :country],
+      "phone" => [:phone_number],
+      "overview" => [],
+      "apartment" => [:apartment_id]
+    }
+
+    permitted = permitted_attributes[step] || []
     params.require(:user).permit(permitted).merge(form_step: step)
   end
 
