@@ -32,9 +32,9 @@ class OnboardingController < ApplicationController
   end
 
   def join_apartment
-    if @user.update(apartment_id: params[:apartment_id])
+    if @user.update(apartment_id: params["apartment_id"])
       @user.update(onboarding_complete: true)
-      finish_wizard_path
+      redirect_to finish_wizard_path and return
     else 
       render_wizard
     end 
@@ -105,8 +105,6 @@ class OnboardingController < ApplicationController
   end
 
   def finish_wizard_path
-    puts "hello world"
-    # Where to redirect after finishing the wizard (adjust as needed)
-    # user_dashboard_path
+    user_dashboard_path
   end
 end
