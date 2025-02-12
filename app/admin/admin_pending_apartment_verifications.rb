@@ -35,6 +35,18 @@ ActiveAdmin.register AdminPendingApartmentVerification do
     end
   end
 
+  index do
+    selectable_column
+    column :street_address
+    column :city
+    column :state
+    column :zip_code
+    column :country
+    column :status
+    column :created_at
+    actions
+  end
+
   # Custom CSS for the layout
   index do
     div do
