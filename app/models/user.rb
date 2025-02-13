@@ -7,6 +7,7 @@ class User < ApplicationRecord
   encrypts :phone_number, :street_address, :unit_number, :city, :state, :zipcode, :country, :full_address, deterministic: true
 
   belongs_to :apartment, optional: true
+  has_many :listings, dependent: :destroy
 
   cattr_accessor :form_steps do 
     %w[personal_info phone overview apartment]
