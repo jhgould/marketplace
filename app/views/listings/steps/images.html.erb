@@ -1,0 +1,7 @@
+<h2>Upload Images</h2>
+
+<%= form_for @listing, url: wizard_path, method: :put, html: { multipart: true } do |f| %>
+  <%= f.hidden_field :form_step, value: step %>
+  <%= f.file_field :images, multiple: true %>
+  <%= f.submit "Finish" %>
+<% end %>

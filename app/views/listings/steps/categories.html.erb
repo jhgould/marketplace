@@ -1,0 +1,8 @@
+<h2>Select Categories</h2>
+
+<%= form_for @listing, url: wizard_path, method: :put do |f| %>
+  <%= f.hidden_field :form_step, value: step %>
+  <%= f.label :category_id, "Category" %>
+  <%= f.collection_select :category_ids, Category.all, :id, :name, { prompt: "Select a category" }, { class: "form-control" } %>
+  <%= f.submit "Next Step" %>
+<% end %>

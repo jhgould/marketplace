@@ -1,0 +1,14 @@
+<h2>Select Listing Type</h2>
+
+<%= form_for @listing, url: wizard_path, method: :put do |f| %>
+  <%= f.hidden_field :form_step, value: step %>
+  
+  <% ["RentalListing", "ServiceListing", "ProductListing"].each do |type| %>
+    <div>
+      <%= f.radio_button :type, type %>
+      <%= f.label type, type.gsub("Listing", "") %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Next Step" %>
+<% end %>

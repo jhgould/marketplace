@@ -1,0 +1,22 @@
+<h2>Enter Listing Details</h2>
+
+<%= form_for @listing, url: wizard_path, method: :put do |f| %>
+  <%= f.hidden_field :form_step, value: step %>
+
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :price %>
+    <%= f.number_field :price, step: 0.01 %>
+  </div>
+
+  <%= f.submit "Next Step" %>
+<% end %>
