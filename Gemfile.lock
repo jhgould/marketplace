@@ -241,8 +241,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.2-x86_64-linux-gnu)
       racc (~> 1.4)
+    observer (0.1.2)
     orm_adapter (0.5.0)
     pg (1.5.9)
+    pkg-config (1.5.9)
     popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
@@ -312,6 +314,9 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.4.0)
+    rmagick (6.1.1)
+      observer (~> 0.1)
+      pkg-config (~> 1.4)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -413,6 +418,7 @@ DEPENDENCIES
   puma (>= 5.0)
   pundit
   rails (~> 7.1.5, >= 7.1.5.1)
+  rmagick
   rspec-rails (~> 7.0.0)
   sassc-rails
   selenium-webdriver

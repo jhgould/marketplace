@@ -1,0 +1,2 @@
+class ServiceListing < Listing
+end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :listings
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -13,7 +14,11 @@ Rails.application.routes.draw do
 
   namespace :user do
     resource :dashboard, only: [:show], controller: 'dashboard'
-  end 
+  end
+
+  resources :listings, only: [:new, :create, :show, :index] do
+    resources :steps, only: [:show, :update], controller: 'listings/steps'
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
