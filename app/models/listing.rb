@@ -8,7 +8,7 @@ class Listing < ApplicationRecord
   has_many_attached :images
 
   cattr_accessor :form_steps do
-    %w[listing_type details categories images]
+    %w[listing_type details categories images overview]
   end
 
   attr_accessor :form_step
