@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
       admin_dashboard_path
     else
       if resource.onboarding_complete?
-        root_path
+        user_dashboard_path
       else
         onboarding_path("personal_info") # Start the onboarding process
       end

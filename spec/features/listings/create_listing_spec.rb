@@ -31,6 +31,13 @@ RSpec.feature "User can create a listing", type: :feature do
     attach_file "product_listing_images", test_image_path
     
     click_button "Finish"
+
+    expect(page).to have_content("Test Listing")
+    expect(page).to have_content("This is a test listing")
+    expect(page).to have_content("100")
+    expect(page).to have_content("Kitchen")
+    
+    click_button "Publish Listing"
     expect(current_path).to eq(user_dashboard_path)
   end
 end

@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Review Your Listing</h2>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="mb-3">
+        <h3>Basic Details</h3>
+        <p><strong>Title:</strong> <%= @listing.title %></p>
+        <p><strong>Price:</strong> <%= number_to_currency(@listing.price) %></p>
+      </div>
+
+      <div class="mb-3">
+        <h3>Description</h3>
+        <p><%= @listing.description %></p>
+      </div>
+
+      <div class="mb-3">
+        <h3>Categories</h3>
+        <% @listing.categories.each do |category| %>
+          <span class="badge bg-secondary"><%= category.name %></span>
+        <% end %>
+      </div>
+
+      <% if @listing.images.attached? %>
+        <div class="mb-3">
+          <h3>Images</h3>
+          <div class="row">
+            <% @listing.images.each do |image| %>
+              <div class="col-6 mb-3">
+                <%= image_tag image, class: "img-fluid" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= form_for @listing, url: wizard_path, method: :put do |f| %>
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Previous', previous_wizard_path, class: "btn btn-secondary" %>
+      <%= f.submit "Publish Listing", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
