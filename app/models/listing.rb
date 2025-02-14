@@ -36,4 +36,12 @@ class Listing < ApplicationRecord
   with_options if: -> { required_for_step?(:images) } do |step|
     step.validates :images, presence: true
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["apartment", "categories", "images_attachments", "images_blobs", "listing_categories", "user"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["apartment_id", "created_at", "currency", "description", "id", "id_value", "metadata", "price", "status", "title", "type", "updated_at", "user_id"]
+  end
 end
