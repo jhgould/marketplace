@@ -10,10 +10,8 @@ class Listings::StepsController < ApplicationController
   end
 
   def update
+    redirect_to finish_wizard_path and return if step == Listing.form_steps.last
     if @listing.update(listing_params(step))
-      if step == Listing.form_steps.last
-        redirect_to finish_wizard_path and return
-      end 
       render_wizard @listing
     else
       render step
@@ -59,6 +57,8 @@ class Listings::StepsController < ApplicationController
       [:category_ids]
     when "images"
       [images: []]
+    when "overview"
+      []
     end
   end
 
