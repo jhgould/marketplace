@@ -7,6 +7,7 @@
       <p class="card-text"><%= @user.listings.count %></p>
       <% if @user.apartment.present? %>
         <%= link_to "Create Listing" , new_listing_path, class: "btn btn-primary" %>
+        <%= link_to "View Listings" , listings_path, class: "btn btn-primary" %>
       <% end %>
       <% if user_signed_in? %>
         <%= button_to "Logout", destroy_user_session_path, method: :delete, form: { data: { turbo: false } }, class: "btn btn-danger mt-3" %>
