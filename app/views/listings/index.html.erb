@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1>My Listings</h1>
+      <%= link_to 'Create New Listing', new_listing_path, class: 'btn btn-primary mb-4' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @listings.each do |listing| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <% if listing.images.attached? %>
+            <div id="carousel-<%= listing.id %>" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% listing.images.each_with_index do |image, index| %>
+                  <div class="carousel-item <%= 'active' if index.zero? %>">
+                    <%= image_tag image, class: "d-block w-100 card-img-top", style: "height: 200px; object-fit: cover;" %>
+                  </div>
+                <% end %>
+              </div>
+              <% if listing.images.count > 1 %>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<%= listing.id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-<%= listing.id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="bg-light text-center p-4">
+              <p>No image available</p>
+            </div>
+          <% end %>
+          
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to listing.title, listing_path(listing), class: 'text-decoration-none' %></h5>
+            <p class="card-text"><%= truncate(listing.description, length: 100) %></p>
+            <p class="card-text"><strong>Price: </strong>$<%= number_with_precision(listing.price, precision: 2) %></p>
+            <div class="d-flex justify-content-between">
+              <%= link_to 'View', listing_path(listing), class: 'btn btn-primary' %>
+              <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-secondary' %>
+              <%= button_to 'Delete', listing_path(listing), 
+                  method: :delete, 
+                  class: 'btn btn-danger w-100', 
+                  data: { turbo_confirm: 'Are you sure you want to delete this listing?' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @listings.empty? %>
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="lead">You haven't created any listings yet.</p>
+      </div>
+    </div>
+  <% end %>
+</div>
